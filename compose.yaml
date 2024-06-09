@@ -13,3 +13,4 @@ services:
           target: /evolianium
           ignore:
             - ./app/node_modules/
+    tty: true
