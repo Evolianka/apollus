@@ -1,36 +1,23 @@
-import { createServer } from "node:http";
-import path from "node:path";
+import { resolve } from "node:path";
 import nodemon from "nodemon";
 import webpack from "webpack";
-import { Server } from "ws";
+import WebpackDevServer from "webpack-dev-server";
 
-import webpackConfigs from "@root/webpack.config";
+import SERVER from "@root/config/server.config";
+import clientConfig from "@root/webpack/client";
+import serverConfig from "@root/webpack/server";
 
 import logger from "./utils/logger";
 
-const compiler = webpack(webpackConfigs);
 const { ROOT_DIR } = process.env;
+const clientCompiler = webpack(clientConfig);
+const serverCompiler = webpack(serverConfig);
 
-const server = createServer();
-const ws = new Server({ server });
-
-server.listen(9000);
-
-ws.on("connection", () => {
-  logger.info("ws client connected");
-});
-
-ws.on("reload", () => {
-  for (const client of ws.clients) {
-    client.send(JSON.stringify({ action: "reload" }));
-  }
-});
-
-compiler.watch(
+serverCompiler.watch(
   {
-    ignored: [path.resolve(__dirname, `${ROOT_DIR}/node_modules/`)],
+    ignored: [resolve(__dirname, `${ROOT_DIR}/node_modules/`)],
   },
-  (error, stats) => {
+  async (error, stats) => {
     // @ts-expect-error это свойство есть у nodemon и оно отображает состояние
     if (!nodemon.config.run) {
       nodemon({
@@ -48,9 +35,34 @@ compiler.watch(
       logger.info(stats.toString());
     }
 
-    nodemon.emit("restart");
-    ws.emit("reload");
-
-    logger.info("reload page");
+    logger.info("restarting server...");
+    setTimeout(() => {
+      nodemon.emit("restart");
+    }, 300);
   },
 );
+
+const devServer = new WebpackDevServer(
+  {
+    devMiddleware: {
+      writeToDisk: true,
+    },
+    host: "0.0.0.0",
+    hot: true,
+    liveReload: false,
+    port: SERVER.frontPort,
+    proxy: [
+      {
+        changeOrigin: false,
+        context: (path) => !new RegExp(/.*\..*/gm).test(path),
+        target: `http://localhost:${SERVER.backPort}`,
+      },
+    ],
+    watchFiles: {
+      paths: [`${ROOT_DIR}/src/**/*.*`],
+    },
+  },
+  clientCompiler,
+);
+
+devServer.start();

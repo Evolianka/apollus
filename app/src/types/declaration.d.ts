@@ -14,6 +14,7 @@ declare global {
       ROOT_DIR: string;
       MODE: "development" | "production";
       BUILD_TARGET: string;
+      STAND: "dev" | "prod" | "local";
     }
   }
 }

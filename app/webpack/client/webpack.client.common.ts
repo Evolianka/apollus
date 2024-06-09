@@ -1,16 +1,17 @@
 import CopyPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { resolve } from "node:path";
-import webpack from "webpack";
+import webpack, { Configuration } from "webpack";
 import { mergeWithRules } from "webpack-merge";
 
 import LoadablePlugin from "@loadable/webpack-plugin";
+import commonConfig from "@root/webpack/common";
 
-import commonConfig from "../common";
+const { ROOT_DIR, STAND } = process.env;
+const isLocal = STAND === "local";
 
-const ROOT_DIR = process.env.ROOT_DIR;
-
-const config = mergeWithRules({
+const config: Configuration = mergeWithRules({
+  entry: "replace",
   module: {
     rules: {
       test: "match",
@@ -23,7 +24,18 @@ const config = mergeWithRules({
     rules: [
       {
         test: /\.((c|sa|sc)ss)$/i,
-        use: [MiniCssExtractPlugin.loader],
+        use: [isLocal ? "style-loader" : MiniCssExtractPlugin.loader],
+      },
+      {
+        exclude: /node_modules/,
+        test: /\.[jt]sx?$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true, // Using a cache to avoid of recompilation
+            plugins: [require.resolve("react-refresh/babel")],
+          },
+        },
       },
     ],
   },

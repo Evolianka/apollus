@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Root } from "@/components/Root";
+import { Index } from "@/pages/Index";
 
 const routes = [
   {
     Component() {
-      return <Root />;
+      return <Index />;
     },
     path: "/",
   },

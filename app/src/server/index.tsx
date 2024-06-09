@@ -1,1 +1,1 @@
-export { Root } from "@/components/Root";
+export { Root } from "../pages/Index";

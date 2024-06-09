@@ -1,9 +1,10 @@
 import React from "react";
 
-import { Plane } from "@/components/Plane";
-import { WolfHead } from "@/components/WolfHead";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+
+import { Plane } from "../objects/Plane";
+import { WolfHead } from "../objects/WolfHead";
 
 const Scene = () => (
   <Canvas style={{ height: "100vh", width: "100vw" }}>

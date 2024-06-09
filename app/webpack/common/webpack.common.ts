@@ -1,27 +1,12 @@
-import ESLintPlugin from "eslint-webpack-plugin";
 import { resolve } from "node:path";
-import webpack from "webpack";
+import webpack, { Configuration } from "webpack";
 
 const { MODE, ROOT_DIR } = process.env;
 
-const mode = MODE === "production" ? "production" : "development";
-
-const config = {
-  devtool: "source-map",
-  mode,
-
+const config: Configuration = {
+  mode: MODE,
   module: {
     rules: [
-      {
-        exclude: /node_modules/,
-        test: /\.[jt]sx?$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            cacheDirectory: true, // Using a cache to avoid of recompilation
-          },
-        },
-      },
       {
         test: /\.((c|sa|sc)ss)$/i,
         use: [
@@ -47,21 +32,17 @@ const config = {
     ],
   },
 
-  output: {
-    filename: "[name].js",
-    path: resolve(__dirname, `${ROOT_DIR}/dist/`),
-    publicPath: "/",
-  },
-
   plugins: [
     new webpack.DefinePlugin({ "process.env": JSON.stringify(process.env) }),
-    new ESLintPlugin(),
   ],
 
   resolve: {
     alias: {
       "@": resolve(__dirname, `${ROOT_DIR}/src`),
+      "@client": resolve(__dirname, `${ROOT_DIR}/dist/client`),
+      "@dist": resolve(__dirname, `${ROOT_DIR}/dist`),
       "@root": resolve(__dirname, ROOT_DIR),
+      "@ssr": resolve(__dirname, `${ROOT_DIR}/dist/ssr`),
     },
     extensions: [".tsx", ".ts", ".js"],
   },

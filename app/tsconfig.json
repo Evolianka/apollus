@@ -30,7 +30,9 @@
       "@root/*": [
         "./*"
       ],
-      "@server-bundle": ["./dist/ssr"]
+      "@ssr": ["./dist/ssr"],
+      "@client": ["./dist/client"],
+      "@dist": ["./dist"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "sourceMap": true

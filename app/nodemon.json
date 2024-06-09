@@ -1,4 +1,0 @@
-{
-  "watch": ["server/*", "dist/ssr/*"],
-  "ext": "*"
-}

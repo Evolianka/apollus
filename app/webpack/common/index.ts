@@ -1,7 +1,13 @@
 import developmentConfig from "./webpack.common.dev";
+import localConfig from "./webpack.common.local";
 import productionConfig from "./webpack.common.prod";
 
-const isProduction = process.env.MODE === "production";
-const config = isProduction ? productionConfig : developmentConfig;
+const configs = {
+  dev: developmentConfig,
+  local: localConfig,
+  prod: productionConfig,
+};
 
-export default config;
+const { STAND } = process.env;
+
+export default configs[STAND];

@@ -1,34 +1,41 @@
 import { resolve } from "node:path";
-import { mergeWithRules } from "webpack-merge";
-import nodeExternals from "webpack-node-externals";
+import { Configuration } from "webpack";
+import { merge } from "webpack-merge";
+import webpackNodeExternals from "webpack-node-externals";
 
-import commonConfig from "../common";
+import commonConfig from "@root/webpack/common";
 
-const ROOT_DIR = process.env.ROOT_DIR;
+const { ROOT_DIR } = process.env;
 
-const config = mergeWithRules({
-  module: {
-    rules: {
-      test: "match",
-      use: "prepend",
-    },
-  },
-})(commonConfig, {
-  entry: [resolve(__dirname, `${ROOT_DIR}/src/server/index.tsx`)],
-  experiments: {
-    outputModule: true,
-  },
-  externals: [nodeExternals()],
+const config: Configuration = merge(commonConfig, {
+  entry: [resolve(__dirname, `${ROOT_DIR}/src/router/routes.tsx`)],
+  externals: [webpackNodeExternals()],
   externalsPresets: { node: true },
-  name: "server",
-  output: {
-    library: {
-      type: "commonjs-static",
-    },
-    path: resolve(__dirname, `${ROOT_DIR}/dist/ssr`),
+
+  module: {
+    rules: [
+      {
+        exclude: /node_modules/,
+        test: /\.[jt]sx?$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true, // Using a cache to avoid of recompilation
+          },
+        },
+      },
+    ],
   },
 
-  target: "node20",
+  name: "server",
+
+  output: {
+    libraryTarget: "umd",
+    path: resolve(__dirname, `${ROOT_DIR}/dist/ssr`),
+    publicPath: "/",
+  },
+
+  target: "node",
 });
 
 export default config;

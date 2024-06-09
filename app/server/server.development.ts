@@ -5,19 +5,19 @@ import SERVER from "@root/config/server.config";
 import logger from "./utils/logger";
 import ssrMiddleware from "./ssrMiddleware";
 
-logger.info("APP initialize");
+logger.info("Server: initialize");
 const app = express();
 
-logger.success("APP initialized");
+logger.success("Server: initialized");
 
-logger.info("Static path initialize");
+logger.info("Server: static path initialize");
 app.use(express.static(SERVER.staticPath));
-logger.success("Static path initialized");
+logger.success("Server: static path initialized");
 
-logger.info("SSR middleware initialize");
+logger.info("Server: SSR middleware initialize");
 app.use("*", ssrMiddleware);
-logger.success("SSR middleware initialized");
+logger.success("Server: SSR middleware initialized");
 
-app.listen(SERVER.port, () => {
-  logger.info(`Server listen: http://localhost:${SERVER.port}`);
+app.listen(SERVER.backPort, () => {
+  logger.info(`Server listen: http://localhost:${SERVER.backPort}`);
 });

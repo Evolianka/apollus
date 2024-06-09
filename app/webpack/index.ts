@@ -6,9 +6,9 @@ const standConfigs = {
   server,
 };
 
-const BUILD_TARGET = process.env.BUILD_TARGET;
+const { BUILD_TARGET } = process.env;
 const configs = [];
-
+console.log(BUILD_TARGET);
 for (const target of BUILD_TARGET.split(",")) {
   configs.push(standConfigs[target.trim()]);
 }
