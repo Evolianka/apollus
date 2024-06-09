@@ -14,7 +14,7 @@ const config = mergeWithRules({
 })(commonConfig, {
   name: "server",
   target: "node20",
-  entry: path.resolve(__dirname, `${ROOT_DIR}/src/server/index.tsx`),
+  entry: [path.resolve(__dirname, `${ROOT_DIR}/src/server/index.tsx`)],
   externals: [nodeExternals()],
   externalsPresets: { node: true },
   output: {

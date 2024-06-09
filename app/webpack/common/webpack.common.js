@@ -2,7 +2,6 @@ const path = require("node:path");
 const webpack = require("webpack");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
-const LoadablePlugin = require('@loadable/webpack-plugin');
 const { ROOT_DIR, MODE } = process.env;
 
 const mode = MODE === "production" ? "production" : "development";
@@ -55,7 +54,6 @@ const config = {
   },
 
   plugins: [
-    new LoadablePlugin(),
     new webpack.DefinePlugin({ "process.env": JSON.stringify(process.env) }),
     new ESLintPlugin(),
   ],

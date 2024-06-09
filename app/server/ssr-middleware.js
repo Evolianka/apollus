@@ -5,7 +5,6 @@ const  path = require("path");
 const  { renderToString } = require('react-dom/server');
 const  fs = require('fs');
 const  { ChunkExtractor } = require('@loadable/server');
-const statsFile = path.resolve(__dirname, '../dist/client/loadable-stats.json')
 
 function ssrMiddleware(req, res) {
         try {
@@ -17,16 +16,19 @@ function ssrMiddleware(req, res) {
 
                         template = data;
 
-                        const extractor = new ChunkExtractor({ statsFile })
+                        const extractor = new ChunkExtractor({ statsFile: SERVER.staticPath + '/loadable-stats.json' })
                         const jsx = extractor.collectChunks(React.createElement(Root));
                         const html = renderToString(jsx);
                         const scriptTags = extractor.getScriptTags();
+                        const serverStatusTag = `<script>window.SERVER_STATUS=${JSON.stringify(SERVER.ssr.successStatus)};</script>`;
+                        const wsTag = `<script>(function ${SERVER.ssr.clientWs.toString()})();</script>`;
                         const linkTags = extractor.getLinkTags();
-                        const styleTags = extractor.getStyleTags()
+                        const styleTags = extractor.getStyleTags();
+
                         const renderedHtml = template.replace('{{HEAD}}', linkTags + styleTags)
                             .replace('{{TITLE}}', 'Argentum Konstantinium')
                             .replace('{{BODY_TOP}}', '')
-                            .replace('{{BODY_BOTTOM}}', scriptTags + `<script>window.SERVER_STATUS=${JSON.stringify(SERVER.successStatus)};</script>`)
+                            .replace('{{BODY_BOTTOM}}', serverStatusTag + scriptTags + wsTag)
                             .replace('{{ROOT}}', html);
 
                         res.status(200).set({'Content-Type': 'text/html'}).end(renderedHtml);

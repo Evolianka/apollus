@@ -4,6 +4,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const {mergeWithRules} = require("webpack-merge");
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const ROOT_DIR = process.env.ROOT_DIR;
 
@@ -38,7 +39,7 @@ const config = mergeWithRules({
 
     plugins: [
         new webpack.DefinePlugin({"process.env": JSON.stringify(process.env)}),
-
+        new LoadablePlugin(),
         new MiniCssExtractPlugin({
             filename: "./css/style.css",
             linkType: 'text/css'

@@ -1,12 +1,29 @@
 const webpack = require("webpack");
 const path = require("path");
 const webpackConfigs = require("../webpack.config.js");
+console.log(webpackConfigs)
 const nodemon = require('nodemon');
-const chalk = require("chalk");
-
+const SERVER = require("../config/server.config.js");
+const WebSocket = require('ws');
+const logger = require('./utils/logger');
 const compiler = webpack(webpackConfigs);
 const {ROOT_DIR} = process.env
 
+const http = require('http');
+const server = http.createServer();
+const ws = new WebSocket.Server({ server });
+
+server.listen(9000);
+
+ws.on('connection', () => {
+    logger.info('ws client connected')
+})
+
+ws.on('reload', () => {
+    ws.clients.forEach((client) => {
+        client.send(JSON.stringify({action: 'reload'}))
+    })
+})
 
 compiler.watch({
     ignored: [path.resolve(__dirname, `${ROOT_DIR}/node_modules/`)]
@@ -20,10 +37,12 @@ compiler.watch({
 
 
     if (err) {
-        console.log(err);
+       logger.error(err);
         return;
     }
 
-    console.log(chalk.yellow(stats.toString()))
+    logger.info(stats.toString())
     nodemon.emit('restart')
+    ws.emit('reload');
+    logger.info('reload page')
 });

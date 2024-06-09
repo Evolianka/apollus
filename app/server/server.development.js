@@ -1,21 +1,21 @@
 const express = require("express");
 const SERVER = require("../config/server.config");
 const path = require("path");
-const ssrMiddleware = require("./server.common");
+const ssrMiddleware = require("./ssr-middleware");
 const logger = require("./utils/logger");
 
-logger('APP initialize');
+logger.info('APP initialize');
 const app = express();
-logger('APP initialized');
+logger.success('APP initialized');
 
-logger('Static path initialize');
-app.use(express.static(path.resolve(__dirname, '../dist/client')));
-logger('Static path initialized');
+logger.info('Static path initialize');
+app.use(express.static(SERVER.staticPath));
+logger.success('Static path initialized');
 
-logger('SSR middleware initialize');
+logger.info('SSR middleware initialize');
 app.use('*', ssrMiddleware);
-logger('SSR middleware initialized');
+logger.success('SSR middleware initialized');
 
 app.listen(SERVER.port, () => {
-    logger(`Server started: http://localhost:${SERVER.port}`);
-})
+    logger.info(`Server listen: http://localhost:${SERVER.port}`);
+});
