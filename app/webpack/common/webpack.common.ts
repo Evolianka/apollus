@@ -1,8 +1,8 @@
-const path = require("node:path");
-const webpack = require("webpack");
-const ESLintPlugin = require("eslint-webpack-plugin");
+import ESLintPlugin from "eslint-webpack-plugin";
+import { resolve } from "node:path";
+import webpack from "webpack";
 
-const { ROOT_DIR, MODE } = process.env;
+const { MODE, ROOT_DIR } = process.env;
 
 const mode = MODE === "production" ? "production" : "development";
 
@@ -13,8 +13,8 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
+        test: /\.[jt]sx?$/,
         use: {
           loader: "babel-loader",
           options: {
@@ -26,15 +26,15 @@ const config = {
         test: /\.((c|sa|sc)ss)$/i,
         use: [
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
+              esModule: true,
               importLoaders: 1,
               modules: {
                 localIdentName: "[name]__[local]__[hash:base64:5]", // format of output
                 namedExport: true, // named exports instead of default
               },
-              esModule: true
-            }
+            },
           },
           {
             loader: "sass-loader",
@@ -49,7 +49,7 @@ const config = {
 
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, `${ROOT_DIR}/dist/`),
+    path: resolve(__dirname, `${ROOT_DIR}/dist/`),
     publicPath: "/",
   },
 
@@ -60,11 +60,11 @@ const config = {
 
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, `${ROOT_DIR}/src`),
-      "@root": path.resolve(__dirname, ROOT_DIR),
+      "@": resolve(__dirname, `${ROOT_DIR}/src`),
+      "@root": resolve(__dirname, ROOT_DIR),
     },
     extensions: [".tsx", ".ts", ".js"],
   },
 };
 
-module.exports = config;
+export default config;

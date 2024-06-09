@@ -1,6 +1,7 @@
-const clientCommon = require("./webpack.client.common");
-const { merge } = require("webpack-merge");
-const FileManagerPlugin = require("filemanager-webpack-plugin");
+import FileManagerPlugin from "filemanager-webpack-plugin";
+import { merge } from "webpack-merge";
+
+import clientCommon from "./webpack.client.common";
 
 const config = merge(clientCommon, {
   optimization: {
@@ -25,4 +26,4 @@ const config = merge(clientCommon, {
   ],
 });
 
-module.exports = config;
+export default config;

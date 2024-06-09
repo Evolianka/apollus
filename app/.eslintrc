@@ -11,8 +11,6 @@
   },
   "ignorePatterns": [
     "node_modules",
-    "**/*",
-    "Scene",
     "**/*.css",
     "**/*.scss"
   ],
@@ -42,13 +40,10 @@
     "node": true
   },
   "extends": [
-    "plugin:@evolianka/evolianka/recommended",
-    "plugin:@evolianka/evolianka/common",
     "plugin:@evolianka/evolianka/prettier",
     "plugin:@evolianka/evolianka/import",
-    "plugin:@evolianka/evolianka/simpleImportSort",
     "plugin:@evolianka/evolianka/react",
-    "plugin:@react-three/recommended",
+    "plugin:@evolianka/evolianka/simpleImportSort",
     "plugin:@evolianka/evolianka/promise",
     "plugin:@evolianka/evolianka/unicorn",
     "plugin:@evolianka/evolianka/sonarjs",
@@ -58,5 +53,13 @@
   "plugins": [
     "@evolianka/evolianka",
     "@react-three"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"],
+      "extends": [
+        "plugin:@react-three/recommended"
+      ]
+    }
   ]
 }

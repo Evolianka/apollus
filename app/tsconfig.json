@@ -1,4 +1,5 @@
 {
+  "extends": "ts-node/node16/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist/ssr",
     "lib": [
@@ -7,6 +8,7 @@
       "esnext",
       "es6"
     ],
+    "target": "ES2015",
     "rootDir": "./",
     "allowJs": true,
     "skipLibCheck": true,
@@ -31,10 +33,17 @@
       "@server-bundle": ["./dist/ssr"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "sourceMap": true,
-
+    "sourceMap": true
   },
   "include": [
     "./"
   ],
+  "ts-node": {
+    "swc": true,
+    "files": true,
+    "require": ["tsconfig-paths/register"],
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }

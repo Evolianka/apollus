@@ -1,2 +1,1 @@
-export {Root} from '@/components/Root';
-
+export { Root } from "@/components/Root";

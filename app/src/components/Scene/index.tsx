@@ -1,21 +1,19 @@
-import React, {useEffect, useRef, useState, Suspense} from "react";
+import React from "react";
 
-import {Plane} from "@/components/Plane";
-import {PerspectiveCamera} from "@react-three/drei";
-import {Canvas, useLoader, useThree} from "@react-three/fiber";
-import {WolfHead} from "@/components/WolfHead";
+import { Plane } from "@/components/Plane";
+import { WolfHead } from "@/components/WolfHead";
+import { PerspectiveCamera } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 
-const Scene = () => {
+const Scene = () => (
+  <Canvas style={{ height: "100vh", width: "100vw" }}>
+    <color attach="background" args={["black"]} />
 
-    return <Canvas style={{height: "100vh", width: "100vw"}}>
-        <color attach="background" args={['black']}/>
-
-        <WolfHead/>
-        <ambientLight args={[0xFFFFFF]} intensity={2.0}/>
-        <PerspectiveCamera position={[0, 0, 0]} makeDefault/>
-        <Plane/>
-
-    </Canvas>
-};
+    <WolfHead />
+    <ambientLight args={[0xffffff]} intensity={2} />
+    <PerspectiveCamera position={[0, 0, 0]} makeDefault />
+    <Plane />
+  </Canvas>
+);
 
 export default Scene;

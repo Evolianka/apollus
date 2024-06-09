@@ -1,20 +1,18 @@
-/*
-  eslint react/no-unknown-property: 0
-*/
 import React, { useRef } from "react";
-import {DoubleSide, FrontSide, Mesh} from "three";
+import { DoubleSide, Mesh, ShaderMaterial } from "three";
 
-import {useFrame} from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 
 export const Plane = () => {
-  const reference = useRef<Mesh>();
+  const reference = useRef<Mesh>(null!);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
+    const material = reference.current.material as ShaderMaterial;
 
-    // @ts-expect-error gffgdsg gfsgg gsgg
-    reference.current.material.uniforms.u_time.value = time;
+    material.uniforms.u_time.value = time;
   });
+
   const uniforms = {
     u_amplitude: {
       value: 4,
@@ -170,7 +168,6 @@ export const Plane = () => {
 
   return (
     <mesh
-        // @ts-ignore
       ref={reference}
       position={[0, -18, -520]}
       rotation={[-1.57, 0, 0]}
