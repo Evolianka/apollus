@@ -1,0 +1,15 @@
+services:
+  app:
+    image: argentum_evolianium
+    build:
+      context: ./app
+      target: build
+    ports:
+      - 5000:5000
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /evolianium
+          ignore:
+            - ./app/node_modules/

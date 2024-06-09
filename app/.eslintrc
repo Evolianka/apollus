@@ -1,0 +1,62 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 13,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "ignorePatterns": [
+    "node_modules",
+    "**/*",
+    "Scene",
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "settings": {
+    "files": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"],
+    "react": {
+      "pragma": "React",
+      "fragment": "Fragment",
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "env": {
+    "node": true,
+    "commonjs": true,
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "@typescript-eslint/no-var-requires": ["off"]
+  },
+  "globals": {
+    "node": true
+  },
+  "extends": [
+    "plugin:@evolianka/evolianka/recommended",
+    "plugin:@evolianka/evolianka/common",
+    "plugin:@evolianka/evolianka/prettier",
+    "plugin:@evolianka/evolianka/import",
+    "plugin:@evolianka/evolianka/simpleImportSort",
+    "plugin:@evolianka/evolianka/react",
+    "plugin:@react-three/recommended",
+    "plugin:@evolianka/evolianka/promise",
+    "plugin:@evolianka/evolianka/unicorn",
+    "plugin:@evolianka/evolianka/sonarjs",
+    "plugin:@evolianka/evolianka/typescript",
+    "plugin:@evolianka/evolianka/perfectionist"
+  ],
+  "plugins": [
+    "@evolianka/evolianka",
+    "@react-three"
+  ]
+}
