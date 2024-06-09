@@ -15,14 +15,11 @@ const config: Configuration = merge(commonConfig, {
   module: {
     rules: [
       {
-        exclude: /node_modules/,
-        test: /\.[jt]sx?$/,
+        test: /\.([jt])sx?$/,
         use: {
-          loader: "babel-loader",
-          options: {
-            cacheDirectory: true, // Using a cache to avoid of recompilation
-          },
+          loader: 'swc-loader',
         },
+        include: /src/
       },
     ],
   },

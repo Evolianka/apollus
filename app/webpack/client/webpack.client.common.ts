@@ -3,7 +3,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { resolve } from "node:path";
 import webpack, { Configuration } from "webpack";
 import { mergeWithRules } from "webpack-merge";
-
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import LoadablePlugin from "@loadable/webpack-plugin";
 import commonConfig from "@root/webpack/common";
 
@@ -27,15 +27,11 @@ const config: Configuration = mergeWithRules({
         use: [isLocal ? "style-loader" : MiniCssExtractPlugin.loader],
       },
       {
-        exclude: /node_modules/,
         test: /\.[jt]sx?$/,
         use: {
-          loader: "babel-loader",
-          options: {
-            cacheDirectory: true, // Using a cache to avoid of recompilation
-            plugins: [require.resolve("react-refresh/babel")],
-          },
+          loader: 'swc-loader',
         },
+        include: /src/
       },
     ],
   },
@@ -54,7 +50,7 @@ const config: Configuration = mergeWithRules({
       filename: "./css/style.css",
       linkType: "text/css",
     }),
-
+    new ReactRefreshWebpackPlugin({ overlay: { sockProtocol: 'ws' } }),
     new CopyPlugin({
       patterns: [
         {
