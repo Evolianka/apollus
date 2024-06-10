@@ -1,0 +1,13 @@
+services:
+  development:
+    image: apollus
+    container_name: apollus
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      target: development
+    ports:
+      - 5000:5000
+    tty: true
+    volumes:
+      - ./app:/apollus
