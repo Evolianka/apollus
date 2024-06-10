@@ -1,2 +1,2 @@
-cp ./docker/compose.local.example.yaml ./docker/compose.yaml
-cp ./docker/Dockerfile.example ./docker/Dockerfile
+cp ./docker/compose.local.example.yaml ./compose.yaml
+cp ./docker/Dockerfile.example ./Dockerfile
