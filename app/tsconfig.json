@@ -30,9 +30,15 @@
       "@root/*": [
         "./*"
       ],
-      "@ssr": ["./dist/ssr"],
-      "@client": ["./dist/client"],
-      "@dist": ["./dist"]
+      "@ssr/*": ["./dist/ssr/*"],
+      "@client/*": ["./dist/client/*"],
+      "@dist/*": ["./dist/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@features/*": ["./src/features/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@app/*": ["./src/app/*"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "sourceMap": true

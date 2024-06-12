@@ -24,17 +24,13 @@ const config: Configuration = {
           {
             loader: "sass-loader",
             options: {
-              additionalData: `@import '@/scss/index.scss';`,
+              additionalData: `@import '@shared/ui/scss/index.scss';`,
             },
           },
         ],
       },
     ],
   },
-
-  plugins: [
-    new webpack.DefinePlugin({ "process.env": JSON.stringify(process.env) }),
-  ],
 
   resolve: {
     alias: {
@@ -43,6 +39,12 @@ const config: Configuration = {
       "@dist": resolve(__dirname, `${ROOT_DIR}/dist`),
       "@root": resolve(__dirname, ROOT_DIR),
       "@ssr": resolve(__dirname, `${ROOT_DIR}/dist/ssr`),
+      "@shared": resolve(__dirname, `${ROOT_DIR}/src/shared`),
+      "@entities": resolve(__dirname, `${ROOT_DIR}/src/entities`),
+      "@features": resolve(__dirname, `${ROOT_DIR}/src/features`),
+      "@widgets": resolve(__dirname, `${ROOT_DIR}/src/widgets`),
+      "@pages": resolve(__dirname, `${ROOT_DIR}/src/pages`),
+      "@app": resolve(__dirname, `${ROOT_DIR}/src/app`)
     },
     extensions: [".tsx", ".ts", ".js"],
   },

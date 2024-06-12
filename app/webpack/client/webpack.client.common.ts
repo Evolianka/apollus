@@ -19,7 +19,7 @@ const config: Configuration = mergeWithRules({
     },
   },
 })(commonConfig, {
-  entry: [resolve(__dirname, `${ROOT_DIR}/src/App`)],
+  entry: [resolve(__dirname, `${ROOT_DIR}/src/Main`)],
   module: {
     rules: [
       {
@@ -44,7 +44,7 @@ const config: Configuration = mergeWithRules({
   },
 
   plugins: [
-    new webpack.DefinePlugin({ "process.env": JSON.stringify(process.env) }),
+    new webpack.DefinePlugin({ "process.env": JSON.stringify({...process.env, IS_SSR: false}) }),
     new LoadablePlugin(),
     new MiniCssExtractPlugin({
       filename: "./css/style.css",

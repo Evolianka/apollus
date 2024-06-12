@@ -1,12 +1,12 @@
 import React from "react";
 
-import Scene from "../../components/three/Scene";
+import Scene from "../../shared/ui/Scene";
 
 import * as style from "./style.module.scss";
 
 export const Index = () => {
   return (
-    <div className={style.test}>
+    <div>
       <Scene />
     </div>
   );
