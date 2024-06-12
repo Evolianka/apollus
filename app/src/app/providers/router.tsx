@@ -10,13 +10,7 @@ export const Router = () => {
         }/>
     ));
 
-    const globalRouter = createBrowserRouter(createRoutesFromElements(
-        <Route path="*" element={
-            <Scene>
-                <RouterProvider router={cubeRouter}/>
-            </Scene>
-        }/>
-    ));
-
-    return <RouterProvider router={globalRouter}/>
+    return <Scene>
+        <RouterProvider router={cubeRouter}/>
+    </Scene>
 }
