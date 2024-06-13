@@ -4,6 +4,7 @@ import {merge} from "webpack-merge";
 import webpackNodeExternals from "webpack-node-externals";
 
 import commonConfig from "@root/webpack/common";
+import LoadablePlugin from "@loadable/webpack-plugin";
 
 const {ROOT_DIR} = process.env;
 
@@ -33,6 +34,7 @@ const config: Configuration = merge(commonConfig, {
     },
     plugins: [
         new webpack.DefinePlugin({"process.env": JSON.stringify({...process.env, IS_SSR: true})}),
+        new LoadablePlugin(),
     ],
 
     target: "node",

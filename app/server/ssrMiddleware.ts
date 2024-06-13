@@ -25,7 +25,14 @@ function ssrMiddleware(req: Request, res: Response) {
 
                 template = data;
                 const fetchRequest = createFetchRequest(req, res);
+                const serverExtractor = new ChunkExtractor({
+                    statsFile: resolve(ROOT_DIR, 'dist', 'ssr/loadable-stats.json'),
+                });
+
+                const { default: renderApp } = serverExtractor.requireEntrypoint() as any
                 const {provider} = await renderApp(fetchRequest);
+
+
 
                 const extractor = new ChunkExtractor({
                     statsFile: resolve(

@@ -8,23 +8,18 @@ import clientConfig from "@root/webpack/client";
 import serverConfig from "@root/webpack/server";
 
 import logger from "./utils/logger";
+import {exec} from "node:child_process";
 
 const { ROOT_DIR } = process.env;
 const clientCompiler = webpack(clientConfig);
 const serverCompiler = webpack(serverConfig);
 
+ exec(`cross-env STAND=local ts-node --require ./env.ts ./server/server.development.ts`)
 serverCompiler.watch(
   {
     ignored: [resolve(__dirname, `${ROOT_DIR}/node_modules/`)],
   },
   async (error, stats) => {
-    // @ts-expect-error это свойство есть у nodemon и оно отображает состояние
-    if (!nodemon.config.run) {
-      nodemon({
-        exec: "cross-env STAND=local-dev ts-node --require ./env.ts ./server/server.development.ts",
-      });
-    }
-
     if (error) {
       logger.error(error);
 
@@ -36,9 +31,7 @@ serverCompiler.watch(
     }
 
     logger.info("restarting server...");
-    setTimeout(() => {
-      nodemon.emit("restart");
-    }, 300);
+    // s
   },
 );
 
